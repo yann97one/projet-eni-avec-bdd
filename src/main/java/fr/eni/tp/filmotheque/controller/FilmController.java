@@ -80,10 +80,8 @@ public class FilmController {
 	}
 
 	@PostMapping("/creer")
-	public String creerFilm(@ModelAttribute("film") Film film, @ModelAttribute("membreEnSession") Membre membre, @RequestParam("genreId") String idGenre) {
+	public String creerFilm(@ModelAttribute("film") Film film, @ModelAttribute("membreEnSession") Membre membre) {
 		if (null != membre && membre.getId() > 0 && membre.isAdmin()) {
-			Genre genre = filmService.consulterGenreParId(Long.parseLong(idGenre));
-			film.setGenre(genre);
 			filmService.creerFilm(film);
 		}
 		return "redirect:/films";

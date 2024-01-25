@@ -6,7 +6,7 @@
 
         <li data-th-if="${#strings.contains(action, '/creer')}">
             <label for="selectGenre">Genre : </label>
-            <select id="selectGenre" name="genreId">
+            <select id="selectGenre" data-th-field="*{genre}">
                 <option data-th-each="genre : ${genresEnSession}"
                         data-th-text="${genre.titre}" data-th-value="${genre.id}"></option>
             </select>
