@@ -1,0 +1,4 @@
+<option data-th-fragment="frag-participant-form"
+        data-th-each="item : ${participantsEnSession}"
+        data-th-text="${item.prenom + ' ' + item.nom}"
+        data-th-value="${item.id}"></option>
