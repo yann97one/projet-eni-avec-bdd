@@ -1,5 +1,7 @@
 package fr.eni.tp.filmotheque.bo;
 
+import jakarta.validation.constraints.*;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +12,23 @@ public class Film implements Serializable {
 	 * Numéro de sérialisation
 	 */
 	private static final long serialVersionUID = 1L;
+
+	@NotNull
 	private long id;
+	@NotBlank(message = "Le titre ne peut pas être vide")
+	@Size( max = 250)
 	private String titre;
+	@NotNull
+	@Min(1900)
 	private int annee;
+	@Positive
 	private int duree;
+	@Size(min=20,max = 250)
 	private String synopsis;
+	@NotNull
 	private Participant realisateur;
 	private List<Participant> acteurs;
+	@NotNull
 	private Genre genre;
 	private List<Avis> avis;
 

@@ -4,8 +4,10 @@ import java.util.List;
 
 import fr.eni.tp.filmotheque.bo.Membre;
 import fr.eni.tp.filmotheque.bo.Participant;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import fr.eni.tp.filmotheque.bll.FilmService;
@@ -80,7 +82,10 @@ public class FilmController {
 	}
 
 	@PostMapping("/creer")
-	public String creerFilm(@ModelAttribute("film") Film film, @ModelAttribute("membreEnSession") Membre membre) {
+	public String creerFilm( @Valid @ModelAttribute("film") Film film, BindingResult bindingResult, @ModelAttribute("membreEnSession") Membre membre) {
+		if (bindingResult.hasErrors()) {
+			return "view-film-form";
+		}
 		if (null != membre && membre.getId() > 0 && membre.isAdmin()) {
 			filmService.creerFilm(film);
 		}

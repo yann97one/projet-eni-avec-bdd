@@ -2,6 +2,7 @@
       data-th-object="${film}"
       data-th-fragment="frag-film-form(titreForm, action)" data-th-action="@{${action}}" method="post">
     <h1 data-th-text="${titreForm}"></h1>
+    <div data-th-replace="~{fragments/fragment-errors :: frag-errors}"></div>
     <ul class="flex-outer">
 
         <li data-th-if="${#strings.contains(action, '/creer')}">
@@ -10,6 +11,7 @@
                 <option data-th-each="genre : ${genresEnSession}"
                         data-th-text="${genre.titre}" data-th-value="${genre.id}"></option>
             </select>
+            <div data-th-replace="~{fragments/fragment-error :: frag-error(fieldName='genre')}"></div>
         </li>
         <li data-th-unless="${#strings.contains(action, '/creer')}">
             <label for="inputGenre">Genre : </label>
@@ -19,27 +21,37 @@
                     data-th-disabled="${#strings.isEmpty(action)}"
                     data-th-value="${film.genre.id + ' - ' + film.genre.titre}"/>
         </li>
-        <li><label for="inputYear">Année : </label> <input type="text"
+        <li><label for="inputYear">Année : </label> <input type="number"
                                                            id="inputYear" data-th-disabled="${#strings.isEmpty(action)}"
                                                            data-th-field="*{annee}"/></li>
+        <div data-th-replace="~{fragments/fragment-error :: frag-error(fieldName='annee')}"></div>
+
+
         <li><label for="inputTitle">Titre : </label> <input type="text"
                                                             id="inputTitle"
                                                             data-th-disabled="${#strings.isEmpty(action)}"
                                                             data-th-field="*{titre}"/></li>
+        <div data-th-replace="~{fragments/fragment-error :: frag-error(fieldName='titre')}"></div>
+
+
         <li data-th-if="${#strings.contains(action, '/creer')}">
             <label for="selectDirector">Réalisateur : </label>
             <select id="selectDirector" data-th-field="*{realisateur}">
                 <option data-th-replace="~{fragments/fragment-participant-form :: frag-participant-form}"></option>
             </select>
+
         </li>
         <li data-th-unless="${#strings.contains(action, '/creer')}">
             <label for="inputDirector">Réalisateur : </label>
             <input type="text" id="inputDirector" data-th-disabled="${#strings.isEmpty(action)}"
                    data-th-value="${film.realisateur.prenom} + ' ' + ${film.realisateur.nom}"/>
+
         </li>
         <li><label for="inputDuration">Durée : </label>
             <input type="number" id="inputDuration" data-th-disabled="${#strings.isEmpty(action)}"
                 data-th-field="*{duree}"/>
+            <div data-th-replace="~{fragments/fragment-error :: frag-error(fieldName='duree')}"></div>
+
         </li>
         <li>
             <label>Acteur(s) : </label>
@@ -54,6 +66,8 @@
                 id="taSynopsis" data-th-disabled="${#strings.isEmpty(action)}" data-th-field="*{synopsis}"
                 rows="3">
 					</textarea></li>
+        <div data-th-replace="~{fragments/fragment-error :: frag-error(fieldName='synopsis')}"></div>
+
 
         <li data-th-if="${#strings.isEmpty(action) && not #lists.isEmpty(film.avis)}">
             <label>Commentaire(s): </label>
